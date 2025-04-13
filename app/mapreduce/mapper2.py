@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 def tokenize(text):
     return re.findall(r'[a-zA-Z0-9]+', text.lower())
 
-# Определяем doc_id по имени файла
 filename = os.environ.get('mapreduce_map_input_file') or os.environ.get('map_input_file', '')
 if filename:
     current_doc_id = os.path.basename(filename).split('.')[0]
@@ -24,10 +23,11 @@ else:
 
 logger.info(f"Using doc_id: {current_doc_id}")
 
+# Для каждого токена печатаем: <term> <doc_id>
 for line in sys.stdin:
     line = line.strip()
     if not line:
         continue
     tokens = tokenize(line)
-    for token in tokens:
-        print(f"{token}\t{current_doc_id}\t1")
+    for token in set(tokens):  # важно! считаем DF, поэтому токен только один раз на документ
+        print(f"{token}\t{current_doc_id}")
