@@ -20,4 +20,10 @@ bash prepare_data.sh
 echo "INDEXING DATA"
 bash index.sh /data
 
-bash search.sh "this is a query!"
+echo "Successful data indexing"
+#
+#bash search.sh "this is a query!"
+#
+#bash search.sh "hello"
+#
+#bash search.sh "database"
