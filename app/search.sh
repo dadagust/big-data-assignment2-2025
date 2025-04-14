@@ -1,13 +1,23 @@
 #!/bin/bash
+# This script will run the query.py as a Spark job on YARN.
+
+if [ -z "$1" ]; then
+  echo "Usage: bash search.sh \"some query terms\""
+  exit 1
+fi
+
 echo "This script will include commands to search for documents given the query using Spark RDD"
 
-
+# Активируем твоё venv
 source .venv/bin/activate
 
-# Python of the driver (/app/.venv/bin/python)
-export PYSPARK_DRIVER_PYTHON=$(which python) 
-
-# Python of the excutor (./.venv/bin/python)
+# Указываем Python
+export PYSPARK_DRIVER_PYTHON=$(which python)
 export PYSPARK_PYTHON=./.venv/bin/python
 
-spark-submit --master yarn --archives /app/.venv.tar.gz#.venv query.py  $1
+# Запускаем Spark job на YARN, передавая все аргументы как query
+spark-submit \
+  --master yarn \
+  --deploy-mode client \
+  --archives /app/.venv.tar.gz#.venv \
+  query.py "$@"

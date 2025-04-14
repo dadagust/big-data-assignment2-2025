@@ -6,12 +6,10 @@ INPUT_PATH=${1:-/index/data}
 OUTPUT_PATH1=/tmp/index/output_1
 OUTPUT_PATH2=/tmp/index/output_2
 
-# Важно! Выключить YARN
 export HADOOP_CONF_DIR=""
 export HADOOP_MAPRED_HOME=$HADOOP_HOME
 export HADOOP_YARN_HOME=$HADOOP_HOME
 
-# 1. Первый пайплайн: inverted index + doc_length
 echo "Running first MapReduce (Inverted Index)..."
 hdfs dfs -rm -r -f $OUTPUT_PATH1
 
@@ -24,7 +22,6 @@ hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
   -mapper "python3 mapper1.py" \
   -reducer "python3 reducer1.py"
 
-# 2. Второй пайплайн: term statistics
 echo "Running second MapReduce (Statistics)..."
 hdfs dfs -rm -r -f $OUTPUT_PATH2
 

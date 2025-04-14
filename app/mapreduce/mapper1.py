@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 def tokenize(text):
     return re.findall(r'[a-zA-Z0-9]+', text.lower())
 
-# Определяем doc_id по имени файла
 filename = os.environ.get('mapreduce_map_input_file') or os.environ.get('map_input_file', '')
 if filename:
     current_doc_id = os.path.basename(filename).split('.')[0]
