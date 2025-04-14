@@ -15,7 +15,6 @@ source .venv/bin/activate
 export PYSPARK_DRIVER_PYTHON=$(which python)
 export PYSPARK_PYTHON=./.venv/bin/python
 
-# Запускаем Spark job на YARN, передавая все аргументы как query
 spark-submit \
   --master yarn \
   --deploy-mode client \
